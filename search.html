@@ -110,12 +110,10 @@
       vertical-align: top;
     }
 
-    tr:nth-child(even) td {
-      background-color: #f9f9f9;
-    }
-
-    tr:nth-child(odd) td {
-      background-color: #ffffff;
+    .product-company div {
+      padding: 4px;
+      margin-bottom: 2px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -158,28 +156,29 @@
             resultsContainer.appendChild(pestHeading);
           }
 
-          filtered.forEach((item, index) => {
+          filtered.forEach(item => {
             const resultDiv = document.createElement("div");
             resultDiv.className = "result";
 
             // Group AI by name
             const aiMap = {};
             item.ai.forEach(aiItem => {
-              if (!aiMap[aiItem.name]) {
-                aiMap[aiItem.name] = [];
-              }
+              if (!aiMap[aiItem.name]) aiMap[aiItem.name] = [];
               aiMap[aiItem.name].push({ product: aiItem.product, company: aiItem.company });
             });
 
             // Generate table rows
             let aiRows = '';
             let no = 1;
+            const rowColors = ['#e6f7ff', '#f0ffe6'];
+
             Object.keys(aiMap).forEach(aiName => {
               let productsHTML = '';
               let companiesHTML = '';
-              aiMap[aiName].forEach(pc => {
-                productsHTML += `<div>${pc.product}</div>`;
-                companiesHTML += `<div>${pc.company}</div>`;
+              aiMap[aiName].forEach((pc, index) => {
+                const bgColor = rowColors[index % rowColors.length];
+                productsHTML += `<div style="background-color:${bgColor}">${pc.product}</div>`;
+                companiesHTML += `<div style="background-color:${bgColor}">${pc.company}</div>`;
               });
 
               // Split AI name into English and Burmese
@@ -191,8 +190,8 @@
                 <tr>
                   <td>${no}</td>
                   <td><div>${engName}</div><div>${burName}</div></td>
-                  <td>${productsHTML}</td>
-                  <td>${companiesHTML}</td>
+                  <td class="product-company">${productsHTML}</td>
+                  <td class="product-company">${companiesHTML}</td>
                 </tr>
               `;
               no++;
