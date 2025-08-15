@@ -3,35 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ပိုးမွှားရှာဖွေမှု</title>
+  <title>Search</title>
   <style>
-    :root {
-      --bg-light: #ffffff;
-      --text-light: #000000;
-      --bg-dark: #1a1a1a;
-      --text-dark: #f0f0f0;
-      --accent: #007bff;
-    }
-
     body {
       margin: 0;
       font-family: sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      transition: background-color 0.3s, color 0.3s;
+      background-color: #ffffff;
+      color: #000000;
       overflow: hidden;
     }
 
-    .dark-mode {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    header {
+    .fixed-layout {
+      width: 100vw;
+      height: 100vh;
+      box-sizing: border-box;
       padding: 1rem;
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: bold;
+      overflow-y: auto;
     }
 
     .controls {
@@ -69,38 +56,15 @@
       padding: 0.5rem;
       text-align: left;
     }
-
-    .mode-switch {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
-
-    .fixed-layout {
-      width: 100vw;
-      height: 100vh;
-      box-sizing: border-box;
-      padding: 1rem;
-      overflow-y: auto;
-    }
   </style>
 </head>
 <body>
   <div class="fixed-layout">
-    <header>ပိုးမွှားရှာဖွေမှု / Pest Search</header>
-
     <div class="controls">
       <div style="position: relative;">
-        <input type="text" id="searchInput" placeholder="ပိုးအမည် / Pest Name" onkeydown="if(event.key==='Enter') search()" />
+        <input type="text" id="searchInput" onkeydown="if(event.key==='Enter') search()" />
         <span onclick="search()">🔍</span>
       </div>
-    </div>
-
-    <div class="mode-switch">
-      <label>
-        <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
-        🌞 / 🌙
-      </label>
     </div>
 
     <table id="resultsTable">
@@ -143,10 +107,6 @@
           });
         }
       });
-    }
-
-    function toggleMode() {
-      document.body.classList.toggle('dark-mode');
     }
   </script>
 </body>
