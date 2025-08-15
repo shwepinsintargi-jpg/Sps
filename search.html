@@ -122,4 +122,32 @@
       .then(res => res.json())
       .then(json => data = json);
 
-    function search
+    function search() {
+      const input = document.getElementById('searchInput').value.trim().toLowerCase();
+      const tableBody = document.querySelector('#resultsTable tbody');
+      tableBody.innerHTML = '';
+
+      data.forEach(entry => {
+        const match = entry.pest.toLowerCase().includes(input) || entry.pest_mm.includes(input);
+        if (match) {
+          entry.active_ingredients.forEach(ai => {
+            ai.products.forEach(prod => {
+              const row = document.createElement('tr');
+              row.innerHTML = `
+                <td>${ai.en}<br/>${ai.mm}</td>
+                <td>${prod.name_mm}</td>
+                <td>${prod.company_mm}</td>
+              `;
+              tableBody.appendChild(row);
+            });
+          });
+        }
+      });
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>
