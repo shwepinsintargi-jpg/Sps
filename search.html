@@ -169,7 +169,6 @@
 
             // Generate table rows
             let aiRows = '';
-            let no = 1;
             const rowColors = ['#e6f7ff', '#f0ffe6'];
 
             Object.keys(aiMap).forEach(aiName => {
@@ -188,13 +187,11 @@
 
               aiRows += `
                 <tr>
-                  <td>${no}</td>
                   <td><div>${engName}</div><div>${burName}</div></td>
                   <td class="product-company">${productsHTML}</td>
                   <td class="product-company">${companiesHTML}</td>
                 </tr>
               `;
-              no++;
             });
 
             resultDiv.innerHTML = `
@@ -211,10 +208,9 @@
               <table>
                 <thead>
                   <tr>
-                    <th>No.</th>
-                    <th>AI Name</th>
-                    <th>Product</th>
-                    <th>Company</th>
+                    <th>AI အမည်</th>
+                    <th>ဆေးအမည်</th>
+                    <th>ကုမ္ပဏီ အမည်</th>
                   </tr>
                 </thead>
                 <tbody>
