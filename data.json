@@ -1,29 +1,31 @@
-{
-  "pest": "Thrips",
-  "pest_mm": "လှေး",
-  "region": "မြန်မာနိုင်ငံအနှံ့အပြား",
-  "crops": "စပါး၊ ပဲမျိုးစုံ၊ ဟင်းသီးဟင်းရွက်များ",
-  "damage": "သီးနှံပင်တွင်စုပ်စားဖျက်ဆီးသည်။",
-  "ingredients": [
-    {
-      "en": "Thiamethoxam",
-      "mm": "သိုင်ယာမီသောင်ဇမ်",
-      "products": [
-        { "name_mm": "ဘောက်ဆင်", "company_mm": "ရွှေနဂါး" },
-        { "name_mm": "စနိုက်ပါ", "company_mm": "အဂရီအိုင်ဒေါ" },
-        { "name_mm": "ကေလာ", "company_mm": "ဝိစာရ" },
-        { "name_mm": "ဘလိတ်", "company_mm": "ဩဘာ" }
-      ]
-    },
-    {
-      "en": "Fipronil",
-      "mm": "ဖစ်ပရိုနေး",
-      "products": [
-        { "name_mm": "ဘောက်ဆင်", "company_mm": "ရွှေနဂါး" },
-        { "name_mm": "စနိုက်ပါ", "company_mm": "အဂရီအိုင်ဒေါ" },
-        { "name_mm": "ကေလာ", "company_mm": "ဝိစာရ" },
-        { "name_mm": "ဘလိတ်", "company_mm": "ဩဘာ" }
-      ]
-    }
-  ]
-}
+[
+  {
+    "pest": "Thrips",
+    "pest_mm": "လှေး",
+    "region": "မြန်မာနိုင်ငံအနှံ့အပြား",
+    "crops": "စပါး၊ ပဲမျိုးစုံ၊ ဟင်းသီးဟင်းရွက်များ",
+    "damage": "သီးနှံပင်တွင်စုပ်စားဖျက်ဆီးသည်။",
+    "ingredients": [
+      {
+        "en": "Thiamethoxam",
+        "mm": "သိုင်ယာမီသောင်ဇမ်",
+        "products": [
+          { "name_mm": "ဘောက်ဆင်", "company_mm": "ရွှေနဂါး" },
+          { "name_mm": "စနိုက်ပါ", "company_mm": "အဂရီအိုင်ဒေါ" },
+          { "name_mm": "ကေလာ", "company_mm": "ဝိစာရ" },
+          { "name_mm": "ဘလိတ်", "company_mm": "ဩဘာ" }
+        ]
+      },
+      {
+        "en": "Fipronil",
+        "mm": "ဖစ်ပရိုနေး",
+        "products": [
+          { "name_mm": "ဘောက်ဆင်", "company_mm": "ရွှေနဂါး" },
+          { "name_mm": "စနိုက်ပါ", "company_mm": "အဂရီအိုင်ဒေါ" },
+          { "name_mm": "ကေလာ", "company_mm": "ဝိစာရ" },
+          { "name_mm": "ဘလိတ်", "company_mm": "ဩဘာ" }
+        ]
+      }
+    ]
+  }
+]
