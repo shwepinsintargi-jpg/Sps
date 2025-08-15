@@ -1,90 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pest Management Search</title>
+  <title>Pest Search</title>
   <style>
     body {
       font-family: sans-serif;
-      margin: 2rem;
-      background: #f9f9f9;
+      margin: 20px;
+      background-color: #fff;
+      color: #333;
     }
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+    .search-container {
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .pest-heading {
+      color: #007BFF; /* Blue */
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .result {
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 20px;
+    }
+    .label {
+      font-weight: bold;
+      margin-top: 10px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #fff;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 0.75rem;
-      text-align: left;
+      margin-top: 10px;
     }
     th {
-      background: #eee;
+      background-color: #f0fdf4;
+      color: green;
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #eee;
     }
   </style>
 </head>
 <body>
-  <h1>ဆေးအမည်များနှင့် ကုမ္ပဏီများ</h1>
 
-  <table id="resultTable">
-    <thead>
-      <tr>
-        <th>Active Ingredient</th>
-        <th>ဆေးအမည်</th>
-        <th>ကုမ္ပဏီ</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="ပိုးအမည် ရိုက်ထည့်ပါ..." />
+  </div>
+
+  <div id="resultsContainer"></div>
 
   <script>
+    let pestData = [];
+
     fetch('data.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        const tableBody = document.querySelector('#resultTable tbody');
-        tableBody.innerHTML = '';
+      .then(response => response.json())
+      .then(json => pestData = json);
 
-        data.forEach(pest => {
-          if (!pest.ingredients) return;
+    const searchInput = document.getElementById("searchInput");
+    const resultsContainer = document.getElementById("resultsContainer");
 
-          pest.ingredients.forEach(ingredient => {
-            if (!ingredient.products) return;
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.trim();
+      resultsContainer.innerHTML = "";
 
-            ingredient.products.forEach(product => {
-              const row = document.createElement('tr');
+      if (query === "") return;
 
-              const ingredientCell = document.createElement('td');
-              ingredientCell.textContent = ingredient.en;
+      const filtered = pestData.filter(item => item.pest.includes(query));
 
-              const productCell = document.createElement('td');
-              productCell.textContent = product.name_mm;
+      if (filtered.length > 0) {
+        const pestHeading = document.createElement("div");
+        pestHeading.className = "pest-heading";
+        pestHeading.textContent = filtered[0].pest;
+        resultsContainer.appendChild(pestHeading);
+      }
 
-              const companyCell = document.createElement('td');
-              companyCell.textContent = product.company_mm;
+      filtered.forEach(item => {
+        const resultDiv = document.createElement("div");
+        resultDiv.className = "result";
 
-              row.appendChild(ingredientCell);
-              row.appendChild(productCell);
-              row.appendChild(companyCell);
+        resultDiv.innerHTML = `
+          <div class="label">နေရာ:</div>
+          <div>${item.location}</div>
 
-              tableBody.appendChild(row);
-            });
-          });
-        });
-      })
-      .catch(error => {
-        console.error('Error loading data.json:', error);
+          <div class="label">ကျရောက်သော သီးနှံများ:</div>
+          <div>${item.crops}</div>
+
+          <div class="label">ဖျက်ဆီးပုံ:</div>
+          <div>${item.damage}</div>
+
+          <div class="label">AI များ:</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Active Ingredients</th>
+                <th>ဆေးအမည်</th>
+                <th>ကုမ္ပဏီ</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${item.ai.map(ai => `
+                <tr>
+                  <td>${ai.name}</td>
+                  <td>${ai.product}</td>
+                  <td>${ai.company}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+
+        resultsContainer.appendChild(resultDiv);
       });
+    });
   </script>
+
 </body>
 </html>
