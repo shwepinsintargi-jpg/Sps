@@ -109,6 +109,14 @@
       border-bottom: 1px solid #eee;
       vertical-align: top;
     }
+
+    tr:nth-child(even) td {
+      background-color: #f9f9f9;
+    }
+
+    tr:nth-child(odd) td {
+      background-color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -150,29 +158,44 @@
             resultsContainer.appendChild(pestHeading);
           }
 
-          filtered.forEach(item => {
+          filtered.forEach((item, index) => {
             const resultDiv = document.createElement("div");
             resultDiv.className = "result";
 
-            // Generate table rows: AI Name (English/Burmese) + Product + Company
-            let aiRows = '';
-            const colors = ['#e6f7ff', '#f0ffe6']; // alternate colors
+            // Group AI by name
+            const aiMap = {};
+            item.ai.forEach(aiItem => {
+              if (!aiMap[aiItem.name]) {
+                aiMap[aiItem.name] = [];
+              }
+              aiMap[aiItem.name].push({ product: aiItem.product, company: aiItem.company });
+            });
 
-            item.ai.forEach((aiItem, index) => {
-              const bgColor = colors[index % colors.length];
+            // Generate table rows
+            let aiRows = '';
+            let no = 1;
+            Object.keys(aiMap).forEach(aiName => {
+              let productsHTML = '';
+              let companiesHTML = '';
+              aiMap[aiName].forEach(pc => {
+                productsHTML += `<div>${pc.product}</div>`;
+                companiesHTML += `<div>${pc.company}</div>`;
+              });
 
               // Split AI name into English and Burmese
-              let splitName = aiItem.name.split(' ');
+              let splitName = aiName.split(' ');
               let engName = splitName[0];
               let burName = splitName.slice(1).join(' ');
 
               aiRows += `
-                <tr style="background-color:${bgColor}">
+                <tr>
+                  <td>${no}</td>
                   <td><div>${engName}</div><div>${burName}</div></td>
-                  <td>${aiItem.product}</td>
-                  <td>${aiItem.company}</td>
+                  <td>${productsHTML}</td>
+                  <td>${companiesHTML}</td>
                 </tr>
               `;
+              no++;
             });
 
             resultDiv.innerHTML = `
@@ -189,6 +212,7 @@
               <table>
                 <thead>
                   <tr>
+                    <th>No.</th>
                     <th>AI Name</th>
                     <th>Product</th>
                     <th>Company</th>
