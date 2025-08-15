@@ -154,28 +154,23 @@
             const resultDiv = document.createElement("div");
             resultDiv.className = "result";
 
-            // Group AI by name and stack products & companies
-            const aiMap = {};
-            item.ai.forEach(aiItem => {
-              if (!aiMap[aiItem.name]) {
-                aiMap[aiItem.name] = [];
-              }
-              aiMap[aiItem.name].push(`${aiItem.product}  ${aiItem.company}`);
-            });
-
-            // Generate table rows with alternating background colors
-            const colors = ['#e6f7ff', '#f0ffe6']; // alternate colors
+            // Generate table rows: AI Name (English/Burmese) + Product + Company
             let aiRows = '';
-            Object.keys(aiMap).forEach(aiName => {
-              let productDivs = '';
-              aiMap[aiName].forEach((pc, index) => {
-                const bgColor = colors[index % colors.length];
-                productDivs += `<div style="background-color:${bgColor}; padding:4px;">${pc}</div>`;
-              });
+            const colors = ['#e6f7ff', '#f0ffe6']; // alternate colors
+
+            item.ai.forEach((aiItem, index) => {
+              const bgColor = colors[index % colors.length];
+
+              // Split AI name into English and Burmese
+              let splitName = aiItem.name.split(' ');
+              let engName = splitName[0];
+              let burName = splitName.slice(1).join(' ');
+
               aiRows += `
-                <tr>
-                  <td>${aiName}</td>
-                  <td>${productDivs}</td>
+                <tr style="background-color:${bgColor}">
+                  <td><div>${engName}</div><div>${burName}</div></td>
+                  <td>${aiItem.product}</td>
+                  <td>${aiItem.company}</td>
                 </tr>
               `;
             });
@@ -194,8 +189,9 @@
               <table>
                 <thead>
                   <tr>
-                    <th>AI</th>
-                    <th>Product & Company</th>
+                    <th>AI Name</th>
+                    <th>Product</th>
+                    <th>Company</th>
                   </tr>
                 </thead>
                 <tbody>
