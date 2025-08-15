@@ -172,12 +172,10 @@
             const rowColors = ['#e6f7ff', '#f0ffe6'];
 
             Object.keys(aiMap).forEach(aiName => {
-              let productsHTML = '';
-              let companiesHTML = '';
+              let combinedHTML = '';
               aiMap[aiName].forEach((pc, index) => {
                 const bgColor = rowColors[index % rowColors.length];
-                productsHTML += `<div style="background-color:${bgColor}">${pc.product}</div>`;
-                companiesHTML += `<div style="background-color:${bgColor}">${pc.company}</div>`;
+                combinedHTML += `<div style="background-color:${bgColor}">${pc.product} (${pc.company})</div>`;
               });
 
               // Split AI name into English and Burmese
@@ -188,8 +186,7 @@
               aiRows += `
                 <tr>
                   <td><div>${engName}</div><div>${burName}</div></td>
-                  <td class="product-company">${productsHTML}</td>
-                  <td class="product-company">${companiesHTML}</td>
+                  <td class="product-company">${combinedHTML}</td>
                 </tr>
               `;
             });
@@ -209,8 +206,7 @@
                 <thead>
                   <tr>
                     <th>AI အမည်</th>
-                    <th>ဆေးအမည်</th>
-                    <th>ကုမ္ပဏီ အမည်</th>
+                    <th>ဆေးအမည် / ကုမ္ပဏီအမည်</th>
                   </tr>
                 </thead>
                 <tbody>
