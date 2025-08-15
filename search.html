@@ -84,7 +84,8 @@
 
     fetch('data.json')
       .then(res => res.json())
-      .then(json => data = json);
+      .then(json => data = json)
+      .catch(err => console.error("Data load error:", err));
 
     function search() {
       const input = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -94,16 +95,14 @@
       data.forEach(entry => {
         const match = entry.pest.toLowerCase().includes(input) || entry.pest_mm.includes(input);
         if (match) {
-          entry.active_ingredients.forEach(ai => {
-            ai.products.forEach(prod => {
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td>${ai.en}<br/>${ai.mm}</td>
-                <td>${prod.name_mm}</td>
-                <td>${prod.company_mm}</td>
-              `;
-              tableBody.appendChild(row);
-            });
+          entry.products.forEach(prod => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${entry.en}<br/>${entry.mm}</td>
+              <td>${prod.name_mm}</td>
+              <td>${prod.company_mm}</td>
+            `;
+            tableBody.appendChild(row);
           });
         }
       });
