@@ -25,6 +25,16 @@
           { "name_mm": "ကေလာ", "company_mm": "ဝိစာရ" },
           { "name_mm": "ဘလိတ်", "company_mm": "ဩဘာ" }
         ]
+      },
+      {
+        "en": "Fipronil",
+        "mm": "ဖစ်ပရိုနေး",
+        "products": [
+          { "name_mm": "တော့ဖိုက်တာ", "company_mm": "ရွှေနဂါး" },
+          { "name_mm": "တော်ပီဒို", "company_mm": "ဩဘာ" },
+          { "name_mm": "ပရိုဆင့်", "company_mm": "ဝိစာရ" },
+          { "name_mm": "အာမိုဖစ်ပရို", "company_mm": "အာမို" }
+        ]
       }
     ]
   }
