@@ -45,13 +45,22 @@
 
   <script>
     fetch('data.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(data => {
         const tableBody = document.querySelector('#resultTable tbody');
         tableBody.innerHTML = '';
 
         data.forEach(pest => {
+          if (!pest.ingredients) return;
+
           pest.ingredients.forEach(ingredient => {
+            if (!ingredient.products) return;
+
             ingredient.products.forEach(product => {
               const row = document.createElement('tr');
 
