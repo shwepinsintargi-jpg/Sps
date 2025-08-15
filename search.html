@@ -27,22 +27,22 @@
 
     .search-box {
       position: relative;
-      width: 300px;
+      width: 100%;
+      max-width: 500px;
     }
 
     input[type="text"] {
-      display: block;
-      margin: 0 auto;
       width: 100%;
-      padding: 10px 35px 10px 10px;
+      padding: 12px 40px 12px 12px;
       font-size: 16px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
 
     .search-icon {
       position: absolute;
-      right: 10px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
@@ -98,7 +98,7 @@
 
   <div class="search-container">
     <div class="search-box">
-      <input type="text" id="searchInput" />
+      <input type="text" id="searchInput" placeholder="ပိုးမွှား/ရောဂါ ရှာဖွေရန်" />
       <span class="search-icon">🔍</span>
     </div>
   </div>
