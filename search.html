@@ -115,6 +115,13 @@
       margin-bottom: 2px;
       border-radius: 4px;
     }
+
+    .separator-row td {
+      padding: 0;
+      border: none;
+      height: 6px;
+      background-color: #ccc;
+    }
   </style>
 </head>
 <body>
@@ -171,7 +178,7 @@
             let aiRows = '';
             const rowColors = ['#e6f7ff', '#f0ffe6'];
 
-            Object.keys(aiMap).forEach(aiName => {
+            Object.keys(aiMap).forEach((aiName, aiIndex) => {
               let combinedHTML = '';
               aiMap[aiName].forEach((pc, index) => {
                 const bgColor = rowColors[index % rowColors.length];
@@ -189,6 +196,11 @@
                   <td class="product-company">${combinedHTML}</td>
                 </tr>
               `;
+              
+              // Add separator row after each AI except the last
+              if (aiIndex < Object.keys(aiMap).length - 1) {
+                aiRows += `<tr class="separator-row"><td colspan="2"></td></tr>`;
+              }
             });
 
             resultDiv.innerHTML = `
