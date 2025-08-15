@@ -1,111 +1,107 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Search</title>
   <style>
     body {
-      margin: 0;
       font-family: sans-serif;
-      background-color: #ffffff;
-      color: #000000;
-      overflow: hidden;
+      padding: 2rem;
+      background: #fff;
+      color: #222;
     }
-
-    .fixed-layout {
-      width: 100vw;
-      height: 100vh;
-      box-sizing: border-box;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    input {
+      width: 100%;
+      padding: 0.5rem;
       margin-bottom: 1rem;
-    }
-
-    .controls input[type="text"] {
-      padding: 0.5rem 2rem 0.5rem 0.5rem;
       font-size: 1rem;
-      width: 220px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
     }
-
-    .controls span {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 1.2rem;
-    }
-
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
     }
-
     th, td {
       border: 1px solid #ccc;
       padding: 0.5rem;
       text-align: left;
     }
+    th {
+      background: #f2f2f2;
+    }
+    .info-box {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .info-box div {
+      margin-bottom: 0.3rem;
+    }
   </style>
 </head>
 <body>
-  <div class="fixed-layout">
-    <div class="controls">
-      <div style="position: relative;">
-        <input type="text" id="searchInput" onkeydown="if(event.key==='Enter') search()" />
-        <span onclick="search()">🔍</span>
-      </div>
-    </div>
+  <input type="text" id="searchInput" placeholder="ရှာရန်..."/>
 
-    <table id="resultsTable">
-      <thead>
-        <tr>
-          <th>Active Ingredient</th>
-          <th>ထုတ်ကုန်အမည်</th>
-          <th>ကုမ္ပဏီအမည်</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <div id="infoContainer" class="info-box"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Active Ingredients</th>
+        <th>ဆေး အမည်</th>
+        <th>ကုမ္ပဏီ</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
 
   <script>
     let data = [];
 
     fetch('data.json')
-      .then(res => res.json())
-      .then(json => data = json)
-      .catch(err => console.error("Data load error:", err));
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        document.getElementById('searchInput').addEventListener('input', search);
+      });
 
     function search() {
       const input = document.getElementById('searchInput').value.trim().toLowerCase();
-      const tableBody = document.querySelector('#resultsTable tbody');
+      const tableBody = document.getElementById('tableBody');
+      const infoContainer = document.getElementById('infoContainer');
       tableBody.innerHTML = '';
+      infoContainer.innerHTML = '';
 
-      data.forEach(entry => {
-        const match = entry.pest.toLowerCase().includes(input) || entry.pest_mm.includes(input);
-        if (match) {
-          entry.products.forEach(prod => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${entry.en}<br/>${entry.mm}</td>
-              <td>${prod.name_mm}</td>
-              <td>${prod.company_mm}</td>
-            `;
-            tableBody.appendChild(row);
-          });
-        }
-      });
+      if (!input) return;
+
+      const matched = data.filter(entry =>
+        entry.pest.toLowerCase().includes(input) ||
+        entry.pest_mm.toLowerCase().includes(input) ||
+        entry.en.toLowerCase().includes(input)
+      );
+
+      if (matched.length === 0) return;
+
+      const entry = matched[0];
+
+      infoContainer.innerHTML = `
+        <div><strong>1. တွေ့ရှိရာ ဒေသ -</strong> ${entry.region}</div>
+        <div><strong>2. ကျရောက်တတ်သော သီးနှံများ -</strong> ${entry.crops}</div>
+        <div><strong>3. ဖျက်ဆီးပုံ -</strong> ${entry.damage}</div>
+        <div><strong>4. နှိမ်နင်းနိုင်သော AI များ -</strong></div>
+      `;
+
+      if (entry.products && Array.isArray(entry.products)) {
+        entry.products.forEach(product => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${entry.en}</td>
+            <td>${product.name_mm}</td>
+            <td>${product.company_mm}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
     }
   </script>
 </body>
