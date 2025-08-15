@@ -5,41 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pest Search</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: sans-serif;
-      margin: 20px;
       background-color: #fff;
       color: #333;
+      height: 100vh;
+      overflow: hidden; /* Prevent scrolling */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
     .search-container {
-      margin-bottom: 20px;
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
+
+    .search-box {
+      position: relative;
+      width: 300px;
+    }
+
     input[type="text"] {
       width: 100%;
-      padding: 10px;
+      padding: 10px 35px 10px 10px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+
+    .search-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 18px;
+      color: #888;
+    }
+
+    .results-container {
+      margin-top: 20px;
+      width: 90%;
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
+    }
+
     .pest-heading {
-      color: #007BFF; /* Blue */
+      color: #007BFF;
       font-size: 24px;
       margin-bottom: 10px;
     }
+
     .result {
       margin-bottom: 30px;
       border-bottom: 1px solid #eee;
       padding-bottom: 20px;
     }
+
     .label {
       font-weight: bold;
       margin-top: 10px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
+
     th {
       background-color: #f0fdf4;
       color: green;
@@ -47,6 +85,7 @@
       padding: 8px;
       border-bottom: 1px solid #ccc;
     }
+
     td {
       padding: 8px;
       border-bottom: 1px solid #eee;
@@ -56,10 +95,13 @@
 <body>
 
   <div class="search-container">
-    <input type="text" id="searchInput" placeholder="ပိုးအမည် ရိုက်ထည့်ပါ..." />
+    <div class="search-box">
+      <input type="text" id="searchInput" />
+      <span class="search-icon">🔍</span>
+    </div>
   </div>
 
-  <div id="resultsContainer"></div>
+  <div class="results-container" id="resultsContainer"></div>
 
   <script>
     let pestData = [];
