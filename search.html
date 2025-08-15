@@ -12,17 +12,22 @@
       background-color: #fff;
       color: #333;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
-      align-items: center;
     }
 
     .search-container {
-      margin-top: 20px;
+      flex-shrink: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      background-color: #fff;
+      padding: 10px 0;
       display: flex;
       justify-content: center;
+      border-bottom: 1px solid #ccc;
+      z-index: 1000;
     }
 
     .search-box {
@@ -59,10 +64,12 @@
     }
 
     .results-container {
-      margin-top: 20px;
-      width: 90%;
-      max-height: calc(100vh - 100px);
+      margin-top: 80px;
+      flex: 1;
       overflow-y: auto;
+      width: 90%;
+      align-self: center;
+      max-height: calc(100vh - 80px);
     }
 
     .pest-heading {
@@ -75,6 +82,7 @@
       margin-bottom: 30px;
       border-bottom: 1px solid #eee;
       padding-bottom: 20px;
+      font-size: 14px;
     }
 
     .label {
@@ -99,6 +107,7 @@
     td {
       padding: 8px;
       border-bottom: 1px solid #eee;
+      vertical-align: top;
     }
   </style>
 </head>
@@ -116,66 +125,89 @@
   <script>
     let pestData = [];
 
-    fetch('data.json')
-      .then(response => response.json())
-      .then(json => pestData = json);
-
     const searchInput = document.getElementById("searchInput");
     const resultsContainer = document.getElementById("resultsContainer");
 
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.trim();
-      resultsContainer.innerHTML = "";
+    fetch('data.json')
+      .then(response => response.json())
+      .then(json => {
+        pestData = json;
 
-      if (query === "") return;
+        searchInput.addEventListener("input", () => {
+          const query = searchInput.value.trim();
+          resultsContainer.innerHTML = "";
 
-      const filtered = pestData.filter(item => item.pest.includes(query));
+          if (query === "") return;
 
-      if (filtered.length > 0) {
-        const pestHeading = document.createElement("div");
-        pestHeading.className = "pest-heading";
-        pestHeading.textContent = filtered[0].pest;
-        resultsContainer.appendChild(pestHeading);
-      }
+          const filtered = pestData.filter(item =>
+            item.pest.toLowerCase().includes(query.toLowerCase())
+          );
 
-      filtered.forEach(item => {
-        const resultDiv = document.createElement("div");
-        resultDiv.className = "result";
+          if (filtered.length > 0) {
+            const pestHeading = document.createElement("div");
+            pestHeading.className = "pest-heading";
+            pestHeading.textContent = filtered[0].pest;
+            resultsContainer.appendChild(pestHeading);
+          }
 
-        resultDiv.innerHTML = `
-          <div class="label">နေရာ:</div>
-          <div>${item.location}</div>
+          filtered.forEach(item => {
+            const resultDiv = document.createElement("div");
+            resultDiv.className = "result";
 
-          <div class="label">ကျရောက်သော သီးနှံများ:</div>
-          <div>${item.crops}</div>
+            // Group AI by name and stack products & companies
+            const aiMap = {};
+            item.ai.forEach(aiItem => {
+              if (!aiMap[aiItem.name]) {
+                aiMap[aiItem.name] = [];
+              }
+              aiMap[aiItem.name].push(`${aiItem.product}  ${aiItem.company}`);
+            });
 
-          <div class="label">ဖျက်ဆီးပုံ:</div>
-          <div>${item.damage}</div>
-
-          <div class="label">နှိမ်နင်းနိုင်သော AI များ:</div>
-          <table>
-            <thead>
-              <tr>
-                <th>AI</th>
-                <th>ဆေးအမည်</th>
-                <th>ကုမ္ပဏီ</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${item.ai.map(ai => `
+            // Generate table rows with alternating background colors
+            const colors = ['#e6f7ff', '#f0ffe6']; // alternate colors
+            let aiRows = '';
+            Object.keys(aiMap).forEach(aiName => {
+              let productDivs = '';
+              aiMap[aiName].forEach((pc, index) => {
+                const bgColor = colors[index % colors.length];
+                productDivs += `<div style="background-color:${bgColor}; padding:4px;">${pc}</div>`;
+              });
+              aiRows += `
                 <tr>
-                  <td>${ai.name}</td>
-                  <td>${ai.product}</td>
-                  <td>${ai.company}</td>
+                  <td>${aiName}</td>
+                  <td>${productDivs}</td>
                 </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        `;
+              `;
+            });
 
-        resultsContainer.appendChild(resultDiv);
+            resultDiv.innerHTML = `
+              <div class="label">နေရာ:</div>
+              <div>${item.location}</div>
+
+              <div class="label">ကျရောက်သော သီးနှံများ:</div>
+              <div>${item.crops}</div>
+
+              <div class="label">ဖျက်ဆီးပုံ:</div>
+              <div>${item.damage}</div>
+
+              <div class="label">နှိမ်နင်းနိုင်သော AI များ:</div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>AI</th>
+                    <th>Product & Company</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${aiRows}
+                </tbody>
+              </table>
+            `;
+
+            resultsContainer.appendChild(resultDiv);
+          });
+        });
       });
-    });
   </script>
 
 </body>
