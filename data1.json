@@ -1,0 +1,55 @@
+[
+  {
+    "pest": "လှေး",
+    "location": "မြန်မာနိုင်ငံအနှံ့အပြား",
+    "crops": "စပါး၊ ပဲမျိုးစုံ၊ ဟင်းသီးဟင်းရွက်များ",
+    "damage": "သီးနှံပင်တွင်စုပ်စားဖျက်ဆီးသည်။",
+    "ai": [
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ဘောက်ဆင်",
+        "company": "ရွှေနဂါး"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "စနိုက်ပါ",
+        "company": "အဂရီအိုင်ဒေါ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ကေလာ",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ဘလိတ်",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Fipronil ဖစ်ပရိုနေး",
+        "product": "တော့ဖိုက်တာ",
+        "company": "ရွှေနဂါး"
+      },
+      {
+        "name": "Fipronil ဖစ်ပရိုနေး",
+        "product": "တော်ပီဒို",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Fipronil ဖစ်ပရိုနေး",
+        "product": "ပရိုဆင့်",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Fipronil ဖစ်ပရိုနေး",
+        "product": "အာမိုဖစ်ပရို",
+        "company": "အာမို"
+      },
+      {
+        "name": "Thiamethoxam + Lambda-Cyhalothrin သိုင်ယာမီသောင်သောင်ဇမ်+လန်ဒါဆိုက်ဟေလိုသရင်",
+        "product": "ဒိုမီနို",
+        "company": "ကောင်းသုခ"
+      }
+    ]
+  }
+]
