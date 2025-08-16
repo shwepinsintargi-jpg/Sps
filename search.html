@@ -5,21 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pest Search</title>
 <style>
-html, body { margin:0; padding:0; font-family:'Myanmar Text', sans-serif; background:#fff; color:#333; height:100vh; display:flex; flex-direction:column; }
-.search-container { position:fixed; top:0; left:0; width:100%; background:#fff; padding:10px 0; display:flex; justify-content:center; border-bottom:1px solid #ccc; z-index:1000; }
-.search-box { position:relative; width:100%; max-width:500px; height:48px; }
-input[type="text"] { width:100%; height:48px; padding:12px 40px 12px 12px; font-size:16px; line-height:24px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; font-family:'Myanmar Text',sans-serif; }
-.search-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; font-size:18px; color:#888; }
-.results-container { margin-top:80px; flex:1; overflow-y:auto; width:90%; align-self:center; max-height:calc(100vh - 80px); }
-.pest-heading { color:#007BFF; font-size:24px; margin-bottom:10px; }
-.result { margin-bottom:30px; border-bottom:1px solid #eee; padding-bottom:20px; font-size:14px; }
-.label { font-weight:bold; margin-top:10px; }
-table { width:100%; border-collapse:collapse; margin-top:10px; }
-th { background:#f0fdf4; color:green; text-align:left; padding:8px; border-bottom:1px solid #ccc; }
-td { padding:8px; border-bottom:1px solid #eee; vertical-align:top; }
-.product-company div { padding:4px; margin-bottom:2px; border-radius:4px; }
-.separator-row td { padding:0; border:none; height:6px; background:#ccc; }
-mark { background:yellow; }
+html, body {
+  margin:0;
+  padding:0;
+  font-family:'Myanmar Text', sans-serif;
+  background:#fff;
+  color:#333;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.search-container {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#fff;
+  padding:10px 0;
+  display:flex;
+  justify-content:center;
+  border-bottom:1px solid #ccc;
+  z-index:1000;
+}
+.search-box {
+  position:relative;
+  width:100%;
+  max-width:500px;
+  height:48px;
+}
+input[type="text"] {
+  width:100%;
+  height:48px;
+  padding:12px 40px 12px 12px;
+  font-size:16px;
+  line-height:24px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  box-sizing:border-box;
+  font-family:'Myanmar Text',sans-serif;
+}
+.search-icon {
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  font-size:18px;
+  color:#888;
+}
+.results-container {
+  margin-top:80px;
+  flex:1;
+  overflow-y:auto;
+  width:90%;
+  align-self:center;
+  max-height:calc(100vh - 80px);
+  scroll-behavior: smooth;
+}
+.pest-heading {
+  color:#007BFF;
+  font-size:24px;
+  margin-bottom:10px;
+}
+.result {
+  margin-bottom:30px;
+  border-bottom:1px solid #eee;
+  padding-bottom:20px;
+  font-size:14px;
+}
+.label {
+  font-weight:bold;
+  margin-top:10px;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th {
+  background:#f0fdf4;
+  color:green;
+  text-align:left;
+  padding:8px;
+  border-bottom:1px solid #ccc;
+}
+td {
+  padding:8px;
+  border-bottom:1px solid #eee;
+  vertical-align:top;
+}
+.product-company div {
+  padding:4px;
+  margin-bottom:2px;
+  border-radius:4px;
+}
+.separator-row td {
+  padding:0;
+  border:none;
+  height:6px;
+  background:#ccc;
+}
+mark {
+  background:yellow;
+}
+
+/* Scroll-to-top button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 16px;
+}
 </style>
 </head>
 <body>
@@ -33,10 +137,13 @@ mark { background:yellow; }
 
 <div class="results-container" id="resultsContainer"></div>
 
+<button id="scrollTopBtn">↑</button>
+
 <script>
 let pestData = [];
 const searchInput = document.getElementById("searchInput");
 const resultsContainer = document.getElementById("resultsContainer");
+const scrollBtn = document.getElementById('scrollTopBtn');
 
 // Highlight matching keywords
 function highlight(text, query) {
@@ -99,7 +206,7 @@ loadAllData().then(json => {
       });
 
       let aiRows = '';
-      const rowColors = ['#e6f7ff', '#f0ffe6'];
+      const rowColors = ['#d0f0ff', '#e0ffe0']; // Brighter colors
 
       Object.keys(aiMap).forEach((aiName, aiIndex) => {
         let combinedHTML = '';
@@ -127,6 +234,19 @@ loadAllData().then(json => {
       resultsContainer.appendChild(resultDiv);
     });
   });
+});
+
+// Scroll button functionality
+resultsContainer.addEventListener('scroll', () => {
+  if (resultsContainer.scrollTop > 100) {
+    scrollBtn.style.display = 'block';
+  } else {
+    scrollBtn.style.display = 'none';
+  }
+});
+
+scrollBtn.addEventListener('click', () => {
+  resultsContainer.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
 
