@@ -1,257 +1,134 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pest Search</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Myanmar Text', sans-serif;
-      background-color: #fff;
-      color: #333;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .search-container {
-      flex-shrink: 0;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #fff;
-      padding: 10px 0;
-      display: flex;
-      justify-content: center;
-      border-bottom: 1px solid #ccc;
-      z-index: 1000;
-    }
-
-    .search-box {
-      position: relative;
-      width: 100%;
-      max-width: 500px;
-      height: 48px;
-      flex-shrink: 0;
-    }
-
-    input[type="text"] {
-      display: block;
-      width: 100%;
-      height: 48px;
-      padding: 12px 40px 12px 12px;
-      font-size: 16px;
-      line-height: 24px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-family: 'Myanmar Text', sans-serif;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      font-size: 18px;
-      color: #888;
-    }
-
-    .results-container {
-      margin-top: 80px;
-      flex: 1;
-      overflow-y: auto;
-      width: 90%;
-      align-self: center;
-      max-height: calc(100vh - 80px);
-    }
-
-    .pest-heading {
-      color: #007BFF;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .result {
-      margin-bottom: 30px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 20px;
-      font-size: 14px;
-    }
-
-    .label {
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th {
-      background-color: #f0fdf4;
-      color: green;
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-    }
-
-    td {
-      padding: 8px;
-      border-bottom: 1px solid #eee;
-      vertical-align: top;
-    }
-
-    .product-company div {
-      padding: 4px;
-      margin-bottom: 2px;
-      border-radius: 4px;
-    }
-
-    .separator-row td {
-      padding: 0;
-      border: none;
-      height: 6px;
-      background-color: #ccc;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pest Search</title>
+<style>
+html, body { margin:0; padding:0; font-family:'Myanmar Text', sans-serif; background:#fff; color:#333; height:100vh; display:flex; flex-direction:column; }
+.search-container { position:fixed; top:0; left:0; width:100%; background:#fff; padding:10px 0; display:flex; justify-content:center; border-bottom:1px solid #ccc; z-index:1000; }
+.search-box { position:relative; width:100%; max-width:500px; height:48px; }
+input[type="text"] { width:100%; height:48px; padding:12px 40px 12px 12px; font-size:16px; line-height:24px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; font-family:'Myanmar Text',sans-serif; }
+.search-icon { position:absolute; right:12px; top:50%; transform:translateY(-50%); pointer-events:none; font-size:18px; color:#888; }
+.results-container { margin-top:80px; flex:1; overflow-y:auto; width:90%; align-self:center; max-height:calc(100vh - 80px); }
+.pest-heading { color:#007BFF; font-size:24px; margin-bottom:10px; }
+.result { margin-bottom:30px; border-bottom:1px solid #eee; padding-bottom:20px; font-size:14px; }
+.label { font-weight:bold; margin-top:10px; }
+table { width:100%; border-collapse:collapse; margin-top:10px; }
+th { background:#f0fdf4; color:green; text-align:left; padding:8px; border-bottom:1px solid #ccc; }
+td { padding:8px; border-bottom:1px solid #eee; vertical-align:top; }
+.product-company div { padding:4px; margin-bottom:2px; border-radius:4px; }
+.separator-row td { padding:0; border:none; height:6px; background:#ccc; }
+mark { background:yellow; }
+</style>
 </head>
 <body>
 
-  <div class="search-container">
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="ပိုးမွှား/ရောဂါ ရှာဖွေရန်" />
-      <span class="search-icon">🔍</span>
-    </div>
+<div class="search-container">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="ပိုးမွှား/ရောဂါ ရှာဖွေရန်" />
+    <span class="search-icon">🔍</span>
   </div>
+</div>
 
-  <div class="results-container" id="resultsContainer"></div>
+<div class="results-container" id="resultsContainer"></div>
 
-  <script>
-    let pestData = [];
+<script>
+let pestData = [];
+const searchInput = document.getElementById("searchInput");
+const resultsContainer = document.getElementById("resultsContainer");
 
-    const searchInput = document.getElementById("searchInput");
-    const resultsContainer = document.getElementById("resultsContainer");
+// Highlight matching keywords
+function highlight(text, query) {
+  const regex = new RegExp(`(${query})`, "gi");
+  return text.replace(regex, '<mark>$1</mark>');
+}
 
-    // ✅ Add JSON file names here, you can add more later
-    const dataFiles = ['data.json', 'data2.json', 'data3.json'];
+// Load all JSON files listed in files.json
+async function loadAllData() {
+  try {
+    const listResp = await fetch('files.json'); // List of JSON files
+    const dataFiles = await listResp.json();
 
-    // Function to load multiple JSON files
-    async function loadData() {
-      let allData = [];
-      for (let file of dataFiles) {
-        try {
-          const response = await fetch(file);
-          if (response.ok) {
-            const json = await response.json();
-            allData = allData.concat(json);
-          }
-        } catch (err) {
-          console.error("Error loading", file, err);
+    let allData = [];
+    for (let file of dataFiles) {
+      try {
+        const resp = await fetch(file);
+        if (resp.ok) {
+          const json = await resp.json();
+          allData = allData.concat(json);
         }
+      } catch(err) {
+        console.error("Error loading", file, err);
       }
-      return allData;
     }
+    return allData;
+  } catch(e) {
+    console.error("Failed to load files.json", e);
+    return [];
+  }
+}
 
-    // Highlight matching keywords
-    function highlight(text, query) {
-      const regex = new RegExp(`(${query})`, "gi");
-      return text.replace(regex, '<mark>$1</mark>');
-    }
+// Load data and setup search
+loadAllData().then(json => {
+  pestData = json;
 
-    loadData().then(json => {
-      pestData = json;
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim();
+    resultsContainer.innerHTML = "";
+    if (query === "") return;
 
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.trim();
-        resultsContainer.innerHTML = "";
+    const filtered = pestData.filter(item =>
+      item.pest.toLowerCase().includes(query.toLowerCase())
+    );
 
-        if (query === "") return;
+    filtered.forEach(item => {
+      const pestHeading = document.createElement("div");
+      pestHeading.className = "pest-heading";
+      pestHeading.innerHTML = highlight(item.pest, query);
+      resultsContainer.appendChild(pestHeading);
 
-        const filtered = pestData.filter(item =>
-          item.pest.toLowerCase().includes(query.toLowerCase())
-        );
+      const resultDiv = document.createElement("div");
+      resultDiv.className = "result";
 
-        filtered.forEach(item => {
-          const pestHeading = document.createElement("div");
-          pestHeading.className = "pest-heading";
-          pestHeading.innerHTML = highlight(item.pest, query);
-          resultsContainer.appendChild(pestHeading);
-
-          const resultDiv = document.createElement("div");
-          resultDiv.className = "result";
-
-          // Group AI by name
-          const aiMap = {};
-          item.ai.forEach(aiItem => {
-            if (!aiMap[aiItem.name]) aiMap[aiItem.name] = [];
-            aiMap[aiItem.name].push({ product: aiItem.product, company: aiItem.company });
-          });
-
-          // Generate table rows
-          let aiRows = '';
-          const rowColors = ['#e6f7ff', '#f0ffe6'];
-
-          Object.keys(aiMap).forEach((aiName, aiIndex) => {
-            let combinedHTML = '';
-            aiMap[aiName].forEach((pc, index) => {
-              const bgColor = rowColors[index % rowColors.length];
-              combinedHTML += `<div style="background-color:${bgColor}">${highlight(pc.product, query)} (${highlight(pc.company, query)})</div>`;
-            });
-
-            let splitName = aiName.split(' ');
-            let engName = splitName[0];
-            let burName = splitName.slice(1).join(' ');
-
-            aiRows += `
-              <tr>
-                <td><div>${highlight(engName, query)}</div><div>${highlight(burName, query)}</div></td>
-                <td class="product-company">${combinedHTML}</td>
-              </tr>
-            `;
-
-            if (aiIndex < Object.keys(aiMap).length - 1) {
-              aiRows += `<tr class="separator-row"><td colspan="2"></td></tr>`;
-            }
-          });
-
-          resultDiv.innerHTML = `
-            <div class="label">ကျရောက်သောဒေသများ ></div>
-            <div>${highlight(item.location, query)}</div>
-
-            <div class="label">ကျရောက်သော သီးနှံများ ></div>
-            <div>${highlight(item.crops, query)}</div>
-
-            <div class="label">ဖျက်ဆီးပုံ ></div>
-            <div>${highlight(item.damage, query)}</div>
-
-            <div class="label">နှိမ်နင်းနိုင်သော AI များ ></div>
-            <table>
-              <thead>
-                <tr>
-                  <th>AI အမည်</th>
-                  <th>ဆေးအမည် / ကုမ္ပဏီအမည်</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${aiRows}
-              </tbody>
-            </table>
-          `;
-
-          resultsContainer.appendChild(resultDiv);
-        });
+      // Group AI by name
+      const aiMap = {};
+      item.ai.forEach(aiItem => {
+        if (!aiMap[aiItem.name]) aiMap[aiItem.name] = [];
+        aiMap[aiItem.name].push({ product: aiItem.product, company: aiItem.company });
       });
+
+      let aiRows = '';
+      const rowColors = ['#e6f7ff', '#f0ffe6'];
+
+      Object.keys(aiMap).forEach((aiName, aiIndex) => {
+        let combinedHTML = '';
+        aiMap[aiName].forEach((pc,index)=>{
+          const bgColor = rowColors[index % rowColors.length];
+          combinedHTML += `<div style="background-color:${bgColor}">${highlight(pc.product, query)} (${highlight(pc.company, query)})</div>`;
+        });
+
+        let splitName = aiName.split(' ');
+        let engName = splitName[0];
+        let burName = splitName.slice(1).join(' ');
+
+        aiRows += `<tr><td><div>${highlight(engName, query)}</div><div>${highlight(burName, query)}</div></td><td class="product-company">${combinedHTML}</td></tr>`;
+        if(aiIndex < Object.keys(aiMap).length-1) aiRows += `<tr class="separator-row"><td colspan="2"></td></tr>`;
+      });
+
+      resultDiv.innerHTML = `
+        <div class="label">ကျရောက်သောဒေသများ ></div><div>${highlight(item.location, query)}</div>
+        <div class="label">ကျရောက်သော သီးနှံများ ></div><div>${highlight(item.crops, query)}</div>
+        <div class="label">ဖျက်ဆီးပုံ ></div><div>${highlight(item.damage, query)}</div>
+        <div class="label">နှိမ်နင်းနိုင်သော AI များ ></div>
+        <table><thead><tr><th>AI အမည်</th><th>ဆေးအမည် / ကုမ္ပဏီအမည်</th></tr></thead><tbody>${aiRows}</tbody></table>
+      `;
+
+      resultsContainer.appendChild(resultDiv);
     });
-  </script>
+  });
+});
+</script>
 
 </body>
 </html>
