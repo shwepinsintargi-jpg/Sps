@@ -141,8 +141,8 @@
     const searchInput = document.getElementById("searchInput");
     const resultsContainer = document.getElementById("resultsContainer");
 
-    // ✅ Add all JSON file names here
-    const dataFiles = ['data1.json', 'data2.json', 'data3.json'];
+    // ✅ Add JSON file names here, you can add more later
+    const dataFiles = ['data.json', 'data2.json', 'data3.json'];
 
     // Function to load multiple JSON files
     async function loadData() {
@@ -161,6 +161,12 @@
       return allData;
     }
 
+    // Highlight matching keywords
+    function highlight(text, query) {
+      const regex = new RegExp(`(${query})`, "gi");
+      return text.replace(regex, '<mark>$1</mark>');
+    }
+
     loadData().then(json => {
       pestData = json;
 
@@ -174,14 +180,12 @@
           item.pest.toLowerCase().includes(query.toLowerCase())
         );
 
-        if (filtered.length > 0) {
+        filtered.forEach(item => {
           const pestHeading = document.createElement("div");
           pestHeading.className = "pest-heading";
-          pestHeading.textContent = filtered[0].pest;
+          pestHeading.innerHTML = highlight(item.pest, query);
           resultsContainer.appendChild(pestHeading);
-        }
 
-        filtered.forEach(item => {
           const resultDiv = document.createElement("div");
           resultDiv.className = "result";
 
@@ -200,7 +204,7 @@
             let combinedHTML = '';
             aiMap[aiName].forEach((pc, index) => {
               const bgColor = rowColors[index % rowColors.length];
-              combinedHTML += `<div style="background-color:${bgColor}">${pc.product} (${pc.company})</div>`;
+              combinedHTML += `<div style="background-color:${bgColor}">${highlight(pc.product, query)} (${highlight(pc.company, query)})</div>`;
             });
 
             let splitName = aiName.split(' ');
@@ -209,7 +213,7 @@
 
             aiRows += `
               <tr>
-                <td><div>${engName}</div><div>${burName}</div></td>
+                <td><div>${highlight(engName, query)}</div><div>${highlight(burName, query)}</div></td>
                 <td class="product-company">${combinedHTML}</td>
               </tr>
             `;
@@ -221,13 +225,13 @@
 
           resultDiv.innerHTML = `
             <div class="label">ကျရောက်သောဒေသများ ></div>
-            <div>${item.location}</div>
+            <div>${highlight(item.location, query)}</div>
 
             <div class="label">ကျရောက်သော သီးနှံများ ></div>
-            <div>${item.crops}</div>
+            <div>${highlight(item.crops, query)}</div>
 
             <div class="label">ဖျက်ဆီးပုံ ></div>
-            <div>${item.damage}</div>
+            <div>${highlight(item.damage, query)}</div>
 
             <div class="label">နှိမ်နင်းနိုင်သော AI များ ></div>
             <table>
