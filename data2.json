@@ -1,0 +1,40 @@
+[
+  {
+    "pest": "ပွင့်ထွေး/သီးလုံးဖောက်",
+    "location": "မြန်မာနိုင်ငံအနှံ့အပြား",
+    "crops": "ပဲမျိုးစုံ၊ ဟင်းသီးဟင်းရွက်များ",
+    "damage": "သီးနှံပေါ်သီးလုံး၊ ပွင့်အတွင်းထဲဝင်ဖောက်ပိုးဖျက်ဆီးသည်။",
+    "ai": [
+      {
+        "name": "Emamectin Benzoate အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "အီမာမက်",
+        "company": "ရွှေနဂါး"
+      },
+      {
+        "name": "Emamectin Benzoate အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "ရွှတ်ဒေါင်း",
+        "company": "မဂ်လာဟင်္သာ"
+      },
+      {
+        "name": "Emamectin Benzoate အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "စလက်ရှင်",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Emamectin Benzoate အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "အမဲနက်",
+        "company": "ဖန်းလင့်ခ်"
+      },
+      {
+        "name": "Indoxacarb + Emamectin Benzoate အင်ဒေါ့စကာ့ပ် + အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "အီမာဒို",
+        "company": "အဂရီအိုင်ဒေါ"
+      },
+      {
+        "name": "Indoxacarb + Emamectin Benzoate အင်ဒေါ့စကာ့ပ် + အီမာမက်တင် ဘန်ဇိုအိတ်",
+        "product": "အင်ဒိုစတား",
+        "company": "ရွှေနဂါး"
+      }
+    ]
+  }
+]
