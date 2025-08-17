@@ -1,73 +1,135 @@
-{
-  "pest": "ယင်ဖြူ",
-  "locations": ["ပူနွေးစိုစွတ်ဒေသများ", "ပူနွေးရာသီဥတု"],
-  "crops": ["မတ်ပဲ", "ပဲတီစိမ်း", "ပဲအမျိုးမျိုး", "ခရမ်း", "ခရမ်းချဉ်", "ငရုတ်ကောင်း", "ရုံးပတီ", "ဂေါ်ဖီမျိုးနွယ်ဝင်များ"],
-  "damage": "အပင်၏အောက်ဘက်မှစုပ်ယူဖျက်ဆီးသည်။ နောက်ဆက်တွဲ မှိုရောဂါနှင့်ဗိုင်းရတ်စ်ရောဂါများကျရောက်နိုင်သည်။",
-  "ai": [
-    {
-      "name": "Thiamethoxam – သိုင်ယာမီသောင်ဇမ်",
-      "products": [
-        { "product": "ကေလာ", "company": "ဝိစာရ" },
-        { "product": "အေပီသိုင်ရာ", "company": "အဂရို ပါဝါ" },
-        { "product": "စလိုက်ဒေါင်း", "company": "မဂ်လာဟင်္သာ" },
-        { "product": "ဘောက်ဆင်", "company": "ရွှေနဂါး" },
-        { "product": "ဘလိတ်", "company": "ဩဘာ" },
-        { "product": "စနိုက်ပါ", "company": "အဂရိုဂရင်းလန်း" },
-        { "product": "ရွှေသမီး", "company": "ဂိုးဒန်းကီး/မြင်းကျား" },
-        { "product": "ကွမ်ဇမ်", "company": "ရွှေခြင်္သေ့" },
-        { "product": "သံလက်သီး", "company": "ဝိုင်အဂရို" }
-      ]
-    },
-    {
-      "name": "Acetamiprid – အဆီတာမိပရစ်",
-      "products": [
-        { "product": "အဆက် ၂၀ SL", "company": "ဖန်းလင့်ခ်" },
-        { "product": "ရွှေဆီတာ", "company": "ဂိုးဒန်းကီး/မြင်းကျား" },
-        { "product": "အစီတာ ၂၀၀ SL", "company": "အနော်ရထာ" },
-        { "product": "ကစ်တာ ၂၀% SL", "company": "ယွန်းယွန်း အဂရို" },
-        { "product": "မက်ဂါ ဆီတာ", "company": "မက်ဂါဂရိုး" }
-      ]
-    },
-    {
-      "name": "Abamectin – အဘာမက်တင်",
-      "products": [
-        { "product": "ရော့ ကတ်", "company": "ဝိစာရ" },
-        { "product": "ဂျက်ကတ်", "company": "မင်းမဟော်" },
-        { "product": "အဘာမက် ၁.၈ EC", "company": "ကောင်းသုခ" },
-        { "product": "ဖော်ယူ ၁.၈ EC", "company": "အေးရှန်းခရော့ဂလိုဘယ်" }
-      ]
-    },
-    {
-      "name": "Cartap Hydrochloride – ကာတပ်ဟိုက်ဒရိုကလိုရိုဒ်",
-      "products": [
-        { "product": "ဇွန်ဘီ", "company": "ဩဘာ" }
-      ]
-    },
-    {
-      "name": "Dinotefuran – ဒိုင်နိုတီဖြူရမ်",
-      "products": [
-        { "product": "ဒီဗိုင်း ২০ WG", "company": "ရွှေခြင်္သေ့" }
-      ]
-    },
-    {
-      "name": "Profenofos – ပရိုဖီနိုဖော့စ်",
-      "products": [
-        { "product": "ကျူရာဒရင်း", "company": "ဩဘာ" }
-      ]
-    },
-    {
-      "name": "Pymetrozine – ပိုင်မီထရိုဇင်း",
-      "products": [
-        { "product": "ပရိုဂါဒ့်", "company": "နဝရတ် မြေ" }
-      ]
-    },
-    {
-      "name": "Acetamiprid + Lambda-cyhalothrin – အဆီတာမိပရစ် + လန်ဒါ ဆိုင်ဟေးလိုသရင်",
-      "products": [
-        { "product": "ဆိုင်လာ", "company": "ဝိစာရ" },
-        { "product": "ဘက်တား", "company": "ဩဘာ" },
-        { "product": "နိုးတူး", "company": "မင်းမဟော်" }
-      ]
-    }
-  ]
-}
+[
+  {
+    "pest": "ယင်ဖြူ",
+    "location": "ပူနွေးစိုစွတ်ဒေသများ၊ ပူနွေးရာသီဥတု",
+    "crops": "မတ်ပဲ၊ ပဲတီစိမ်း၊ ပဲအမျိုးမျိုး၊ ခရမ်း၊ ခရမ်းချဉ်၊ ငရုတ်ကောင်း၊ ရုံးပတီ၊ ဂေါ်ဖီမျိုးနွယ်ဝင်များ",
+    "damage": "အပင်၏အောက်ဘက်မှစုပ်ယူဖျက်ဆီးသည်။ နောက်ဆက်တွဲ မှိုရောဂါ ၊ ဗိုင်းရပ်စ် ရောဂါများ ကျရောက်တတ်သည်။",
+    "ai": [
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ကေလာ",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "အေပီသိုင်ရာ",
+        "company": "အဂရို ပါဝါ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "စလိုက်ဒေါင်း",
+        "company": "မဂ်လာဟင်္သာ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ဘောက်ဆင်",
+        "company": "ရွှေနဂါး"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ဘလိတ်",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "စနိုက်ပါ",
+        "company": "အဂရိုဂရင်းလန်း"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ရွှေသမီး",
+        "company": "ဂိုးဒန်းကီး/မြင်းကျား"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "ကွမ်ဇမ်",
+        "company": "ရွှေခြင်္သေ့"
+      },
+      {
+        "name": "Thiamethoxam သိုင်ယာမီသောင်ဇမ်",
+        "product": "သံလက်သီး",
+        "company": "ဝိုင်အဂရို"
+      },
+      {
+        "name": "Acetamiprid အဆီတာမိပရစ်",
+        "product": "အဆက် ၂၀ SL",
+        "company": "ဖန်းလင့်ခ်"
+      },
+      {
+        "name": "Acetamiprid အဆီတာမိပရစ်",
+        "product": "ရွှေဆီတာ",
+        "company": "ဂိုးဒန်းကီး/မြင်းကျား"
+      },
+      {
+        "name": "Acetamiprid အဆီတာမိပရစ်",
+        "product": "အစီတာ ၂၀၀ SL",
+        "company": "အနော်ရထာ"
+      },
+      {
+        "name": "Acetamiprid အဆီတာမိပရစ်",
+        "product": "ကစ်တာ ၂၀% SL",
+        "company": "ယွန်းယွန်း အဂရို"
+      },
+      {
+        "name": "Acetamiprid အဆီတာမိပရစ်",
+        "product": "မက်ဂါ ဆီတာ",
+        "company": "မက်ဂါဂရိုး"
+      },
+      {
+        "name": "Abamectin အဘာမက်တင်",
+        "product": "ရော့ကတ်",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Abamectin အဘာမက်တင်",
+        "product": "ဂျက်ကတ်",
+        "company": "မင်းမဟော်"
+      },
+      {
+        "name": "Abamectin အဘာမက်တင်",
+        "product": "အဘာမက် ၁.၈ EC",
+        "company": "ကောင်းသုခ"
+      },
+      {
+        "name": "Abamectin အဘာမက်တင်",
+        "product": "ဖော်ယူ ၁.၈ EC",
+        "company": "အေးရှန်းခရော့ဂလိုဘယ်"
+      },
+      {
+        "name": "Cartap Hydrochloride ကာတပ်ဟိုက်ဒရိုကလိုရိုဒ်",
+        "product": "ဇွန်ဘီ",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Dinotefuran ဒိုင်နိုတီဖြူရမ်",
+        "product": "ဒီဗိုင်း ၂၀ WG",
+        "company": "ရွှေခြင်္သေ့"
+      },
+      {
+        "name": "Profenofos ပရိုဖီနိုဖော့စ်",
+        "product": "ကျူရာဒရင်း",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Pymetrozine ပိုင်မီထရိုဇင်း",
+        "product": "ပရိုဂါဒ့်",
+        "company": "နဝရတ် မြေ"
+      },
+      {
+        "name": "Acetamiprid + Lambda-cyhalothrin အဆီတာမိပရစ် + လန်ဒါဆိုင်ဟေးလိုသရင်",
+        "product": "ဆိုင်လာ",
+        "company": "ဝိစာရ"
+      },
+      {
+        "name": "Acetamiprid + Lambda-cyhalothrin အဆီတာမိပရစ် + လန်ဒါဆိုင်ဟေးလိုသရင်",
+        "product": "ဘက်တား",
+        "company": "ဩဘာ"
+      },
+      {
+        "name": "Acetamiprid + Lambda-cyhalothrin အဆီတာမိပရစ် + လန်ဒါဆိုင်ဟေးလိုသရင်",
+        "product": "နိုးတူး",
+        "company": "မင်းမဟော်"
+      }
+    ]
+  }
+]
